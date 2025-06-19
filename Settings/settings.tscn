@@ -5,7 +5,7 @@
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_cdu2u"]
 
-[node name="settings" type="Control" node_paths=PackedStringArray("rows", "depth_limit")]
+[node name="settings" type="Control" node_paths=PackedStringArray("rows", "depth_limit", "minimax_btn", "random_btn")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +15,8 @@ grow_vertical = 2
 script = ExtResource("1_qeycx")
 rows = NodePath("MarginContainer/VBoxContainer/rows/rows_input")
 depth_limit = NodePath("MarginContainer/VBoxContainer/HBoxContainer/limit_input")
+minimax_btn = NodePath("MarginContainer/VBoxContainer/HBoxContainer/minimax_select")
+random_btn = NodePath("MarginContainer/VBoxContainer/random_select")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -90,7 +92,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
-text = "[3, 5, 1]"
+text = "singleton not working"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -100,7 +102,6 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_cdu2u")
 theme_override_font_sizes/font_size = 24
-button_pressed = true
 button_group = SubResource("ButtonGroup_cdu2u")
 text = "Minimax"
 
@@ -113,7 +114,7 @@ text = "with depth limit:"
 [node name="limit_input" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "3"
+text = "!!!"
 
 [node name="random_select" type="CheckBox" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -126,3 +127,5 @@ text = "Random"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/easy_btn" to="." method="_on_easy_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/medium_btn" to="." method="_on_medium_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/hard_btn" to="." method="_on_hard_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/minimax_select" to="." method="_on_minimax_select_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/random_select" to="." method="_on_random_select_pressed"]

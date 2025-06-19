@@ -2,6 +2,8 @@ extends Control
 
 @export var rows: LineEdit
 @export var depth_limit: LineEdit
+@export var minimax_btn: Button
+@export var random_btn: Button
 
 const MIN_DEPTH = 3
 const MAX_DEPTH = 20
@@ -19,7 +21,12 @@ const DIFFICULTY_VALUES: Dictionary = {
 # ---------- Godot ----------
 func _ready() -> void:
 	randomize() # seed is randomized every time scene is loaded
-	# TODO: load values from singleton (.button_pressed = bool)
+	
+	rows.text = str(GameSettings.matches_arr)
+	depth_limit.text = str(GameSettings.depth_lim)
+	
+	minimax_btn.button_pressed = GameSettings.is_algo_minimax()
+	random_btn.button_pressed = !GameSettings.is_algo_minimax()
 
 #region Helper
 func generate_array(arr_length:int, min_val:int, max_val:int) -> Array:
@@ -79,9 +86,11 @@ func handle_difficulty(difficulty: String) -> void:
 		values['min_val'],
 		values['max_val']
 	)
+	GameSettings.matches_arr = arr
 	rows.text = str(arr)
 	
 	var limit: int = calculate_depth_limit(arr, difficulty)
+	GameSettings.depth_lim = limit
 	depth_limit.text = str(limit)
 #endregion
 
@@ -101,4 +110,12 @@ func _on_medium_btn_pressed() -> void:
 
 func _on_hard_btn_pressed() -> void:
 	handle_difficulty(HARD)
+
+
+func _on_minimax_select_pressed() -> void:
+	GameSettings.set_algo_as_minimax()
+
+
+func _on_random_select_pressed() -> void:
+	GameSettings.set_algo_as_random()
 #endregion

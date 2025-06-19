@@ -1,34 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmk6xrh7sdoxg"]
+[gd_scene load_steps=4 format=3 uid="uid://bmk6xrh7sdoxg"]
 
 [ext_resource type="FontFile" uid="uid://dsg2m1876ur6s" path="res://Extras/PlayfairDisplay-VariableFont_wght.ttf" id="1_cdu2u"]
+[ext_resource type="Script" uid="uid://cffngllncsuco" path="res://Settings/settings.gd" id="1_qeycx"]
 
-[node name="Settings" type="Control"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_cdu2u"]
+
+[node name="settings" type="Control" node_paths=PackedStringArray("rows", "depth_limit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_qeycx")
+rows = NodePath("MarginContainer/VBoxContainer/rows/rows_input")
+depth_limit = NodePath("MarginContainer/VBoxContainer/HBoxContainer/limit_input")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-
-[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 500)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,14 +27,22 @@ theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="difficulties" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="back_btn" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(125, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_cdu2u")
+theme_override_font_sizes/font_size = 28
+text = "Back"
+
+[node name="difficulties" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/difficulties"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/difficulties"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_cdu2u")
@@ -54,7 +50,7 @@ theme_override_font_sizes/font_size = 28
 text = "Difficulty:"
 vertical_alignment = 1
 
-[node name="easy_btn" type="Button" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/difficulties"]
+[node name="easy_btn" type="Button" parent="MarginContainer/VBoxContainer/difficulties"]
 custom_minimum_size = Vector2(125, 50)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -62,7 +58,7 @@ theme_override_fonts/font = ExtResource("1_cdu2u")
 theme_override_font_sizes/font_size = 28
 text = "Easy"
 
-[node name="medium_btn" type="Button" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/difficulties"]
+[node name="medium_btn" type="Button" parent="MarginContainer/VBoxContainer/difficulties"]
 custom_minimum_size = Vector2(125, 50)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -70,7 +66,7 @@ theme_override_fonts/font = ExtResource("1_cdu2u")
 theme_override_font_sizes/font_size = 28
 text = "Medium"
 
-[node name="hard_btn" type="Button" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/difficulties"]
+[node name="hard_btn" type="Button" parent="MarginContainer/VBoxContainer/difficulties"]
 custom_minimum_size = Vector2(125, 50)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -78,11 +74,11 @@ theme_override_fonts/font = ExtResource("1_cdu2u")
 theme_override_font_sizes/font_size = 28
 text = "Hard"
 
-[node name="rows" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="rows" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/rows"]
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/rows"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_cdu2u")
@@ -90,34 +86,43 @@ theme_override_font_sizes/font_size = 28
 text = "Rows:"
 vertical_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/rows"]
+[node name="rows_input" type="LineEdit" parent="MarginContainer/VBoxContainer/rows"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
-text = "3, 5, 1"
+text = "[3, 5, 1]"
 
-[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="minimax_select" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_cdu2u")
 theme_override_font_sizes/font_size = 24
-text = "Random"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CheckBox2" type="CheckBox" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_cdu2u")
-theme_override_font_sizes/font_size = 24
+button_pressed = true
+button_group = SubResource("ButtonGroup_cdu2u")
 text = "Minimax"
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_cdu2u")
 theme_override_font_sizes/font_size = 22
 text = "with depth limit:"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="limit_input" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "3"
+
+[node name="random_select" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_cdu2u")
+theme_override_font_sizes/font_size = 24
+button_group = SubResource("ButtonGroup_cdu2u")
+text = "Random"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/back_btn" to="." method="_on_back_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/easy_btn" to="." method="_on_easy_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/medium_btn" to="." method="_on_medium_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/hard_btn" to="." method="_on_hard_btn_pressed"]

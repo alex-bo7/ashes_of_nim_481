@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://cd6cgyw86duw7"]
+
+[ext_resource type="Script" uid="uid://b73to0uui78qf" path="res://NimGameGUI/nim_game_gui.gd" id="1_hi7qm"]
+[ext_resource type="FontFile" uid="uid://dsg2m1876ur6s" path="res://Extras/PlayfairDisplay-VariableFont_wght.ttf" id="1_qoo5i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_50ewn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+
+[node name="Control" type="Control" node_paths=PackedStringArray("turn_label", "row_label", "matches_label", "confirm_btn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hi7qm")
+turn_label = NodePath("Panel/turn_label")
+row_label = NodePath("Panel/actions/row_label")
+matches_label = NodePath("Panel/actions/matches_label")
+confirm_btn = NodePath("Panel/actions/confirm_btn")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_50ewn")
+
+[node name="turn_label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 13.0
+offset_right = 100.0
+offset_bottom = 57.0
+theme_override_fonts/font = ExtResource("1_qoo5i")
+theme_override_font_sizes/font_size = 26
+text = "turn..."
+
+[node name="actions" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -314.5
+offset_top = -54.0
+offset_right = 314.5
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="row_label" type="Label" parent="Panel/actions"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_qoo5i")
+theme_override_font_sizes/font_size = 26
+text = "Selected Row: n"
+
+[node name="matches_label" type="Label" parent="Panel/actions"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_qoo5i")
+theme_override_font_sizes/font_size = 26
+text = "Selected Matches: m"
+
+[node name="confirm_btn" type="Button" parent="Panel/actions"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_qoo5i")
+theme_override_font_sizes/font_size = 24
+text = "Confirm"
+
+[connection signal="pressed" from="Panel/actions/confirm_btn" to="." method="_on_confirm_btn_pressed"]

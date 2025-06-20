@@ -39,14 +39,15 @@ func result(state:GameState, move:Array) -> GameState:
 	var new_board = state.board.duplicate()
 	new_board[move[0]] -= move[1]
 	var new_moves = generate_moves(new_board)
-	var new_utility = utility(new_player, new_board)
+	var new_state = GameState.new(new_player, 0, new_board, new_moves)
 	
+	var new_utility = utility(new_state, new_player)
 	return GameState.new(new_player, new_utility, new_board, new_moves)
 
 
-func utility(state:GameState, player:String) -> int:
+func utility(state:GameState, player:turn) -> int:
 	"""Return the value to player; 1 for win, -1 for loss, 0 otherwise."""
-	if self.terminal_test(state):
+	if terminal_test(state):
 		var winner = turn.CPU if state.to_move == turn.PLAYER else turn.PLAYER
 		return -1 if player == winner else 1
 	return 0
@@ -60,8 +61,43 @@ func terminal_test(state:GameState) -> bool:
 	return true
 
 
-func get_moves():
-	print(current_state.to_move == turn.CPU)
-	#print(matches_arr)
-	#print(generate_moves(matches_arr))
+func display(state:GameState) -> void:
+	print_debug("Turn: ", state.to_move, "\nUtility: ", state.utility, 
+	"\nBoard: ", state.board, "\nMoves: ", state.moves)
+
+
+func player_move() -> void:
+	var move = [current_selected_row, selected_matches.size()]
+	print("Player move: ", move)
+	
+	current_state = result(current_state, move)
+	manage_game_state()
+
+
+func cpu_move() -> void:
+	var move = randi_range(0, current_state.moves.size())
+	move = current_state.moves[move]
+	print("CPU move: ", move)
+	
+	current_state = result(current_state, move)
+	manage_game_state()
+
+
+func manage_game_state() -> void:
+	display(current_state)
+	# TODO: reset row, matches and delete matches
+	
+	# check winner
+	if terminal_test(current_state):
+		if current_state.to_move == turn.PLAYER:
+			print("CPU Won")
+		else:
+			print("PLAYER Won")
+		return # game over
+	
+	# run next move
+	if current_state.to_move == turn.CPU:
+		await get_tree().create_timer(0.5).timeout
+		cpu_move()
+	# else player_move() called when player presses confirm btn
 #endregion

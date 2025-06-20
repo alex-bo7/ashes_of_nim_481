@@ -27,6 +27,13 @@ window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[file_customization]
+
+folder_colors={
+"res://NimGameGUI/": "green",
+"res://NimGameScene/": "red"
+}
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

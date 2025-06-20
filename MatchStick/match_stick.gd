@@ -22,6 +22,8 @@ func deselect_match() -> void:
 func on_click() -> void:
 	if (self in GameManager.selected_matches):
 		deselect_match()
+		if GameManager.selected_matches.size() == 0:
+			GameManager.current_selected_row = -1
 	elif GameManager.current_selected_row == -1 or GameManager.selected_matches.size() == 0:
 		GameManager.current_selected_row = row_idx
 		select_match()

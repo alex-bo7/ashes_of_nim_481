@@ -2,6 +2,7 @@
 extends Camera3D
 
 @export var ray_length: float = 1000
+@export var gui: Node
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -15,7 +16,7 @@ func _input(event: InputEvent) -> void:
 		
 		if result:
 			var clicked_object: CollisionObject3D = result["collider"]
-			print_debug("Clicked on", clicked_object.name)
+			#print_debug("Clicked on", clicked_object.name)
 			handle_click(clicked_object)
 
 
@@ -23,3 +24,4 @@ func handle_click(object: CollisionObject3D) -> void:
 	# Add your click handling logic here
 	if object.has_method("on_click"):
 		object.on_click()
+		gui.fill_labels()

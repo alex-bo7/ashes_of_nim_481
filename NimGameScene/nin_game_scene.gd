@@ -5,14 +5,14 @@ const PLACEMENT_STEPS: float = 0.2
 
 func _ready() -> void:
 	place_match_sticks(GameSettings.matches_arr.size())
-	GameManager.get_moves()
+	GameManager.display(GameManager.current_state)
 
 
 func calculate_halfs(length: int) -> Array:
 	var arr_first_half: int = length / 2
 	var arr_second_half: int = length - arr_first_half
 	
-	print_debug('array halfs: ', arr_first_half, ', ', arr_second_half)
+	#print_debug('array halfs: ', arr_first_half, ', ', arr_second_half)
 	return [arr_first_half, arr_second_half]
 
 
@@ -23,8 +23,8 @@ func place_match(i:int, x:float, y:float) -> void:
 	
 	match_stick_instance.position = Vector3(x, y, 0)
 	add_child(match_stick_instance)
-	print_debug('match: ', match_stick_instance.position)
-	print(match_stick_instance.row_idx)
+	#print_debug('match: ', match_stick_instance.position)
+	#print_debug('row: ', match_stick_instance.row_idx)
 
 
 func place_match_sticks(amount: int) -> void:
@@ -35,7 +35,6 @@ func place_match_sticks(amount: int) -> void:
 		place_match(i, steps_x, steps_y)
 		
 		if GameSettings.matches_arr[i] > 1: # got to place more matches, this time horizontally
-			print(GameSettings.matches_arr[i])
 			var halfs = calculate_halfs(GameSettings.matches_arr[i])
 			halfs[1] -= 1 # we subtract 1 becaue we already place 1 match
 			

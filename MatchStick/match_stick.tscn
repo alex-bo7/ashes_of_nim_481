@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxcu2xrrv7vb"]
+
+[ext_resource type="Script" uid="uid://cuv6x20idi26e" path="res://MatchStick/match_stick.gd" id="1_7jd8k"]
+[ext_resource type="PackedScene" uid="uid://ki2bxyp5f5ly" path="res://MatchStick/match_stick.glb" id="2_fysdv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fysdv"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fabjw"]
+height = 0.178223
+radius = 0.0180664
+
+[node name="RigidBody3D" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_fysdv")
+script = ExtResource("1_7jd8k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -5.22915e-10, -0.0119629)
+shape = SubResource("CylinderShape3D_fabjw")
+
+[node name="match_stick2" parent="." instance=ExtResource("2_fysdv")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

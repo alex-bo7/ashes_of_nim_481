@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameSettings="*res://Extras/game_settings.gd"
+GameManager="*res://Extras/game_manager.gd"
 
 [display]
 

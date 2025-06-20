@@ -5,6 +5,7 @@ const PLACEMENT_STEPS: float = 0.2
 
 func _ready() -> void:
 	place_match_sticks(GameSettings.matches_arr.size())
+	GameManager.get_moves()
 
 
 func calculate_halfs(length: int) -> Array:

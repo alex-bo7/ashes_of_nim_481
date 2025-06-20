@@ -4,11 +4,7 @@ const MATCH_STICK_SCENE = preload("res://MatchStick/match_stick.tscn")
 const PLACEMENT_STEPS: float = 0.2
 
 func _ready() -> void:
-	# cut arr length in half	
-	var vertical_halfs: Array = calculate_halfs(GameSettings.matches_arr.size())
-	
-	place_match_sticks(vertical_halfs[0], true, 1)
-	place_match_sticks(vertical_halfs[1], true, -1)
+	place_match_sticks(GameSettings.matches_arr.size())
 
 
 func calculate_halfs(length: int) -> Array:
@@ -17,17 +13,39 @@ func calculate_halfs(length: int) -> Array:
 	
 	print_debug('array halfs: ', arr_first_half, ', ', arr_second_half)
 	return [arr_first_half, arr_second_half]
+
+
+func place_match(i:int, x:float, y:float) -> void:
+	var match_stick_instance = MATCH_STICK_SCENE.instantiate()
+	match_stick_instance.row_idx = i
+	match_stick_instance.freeze = true
 	
-# the first one place += 0.1 then PLACEMENT STEPS
-func place_match_sticks(amount: int, is_vertical: bool, direction: int) -> void:
-	var step: float = PLACEMENT_STEPS
+	match_stick_instance.position = Vector3(x, y, 0)
+	add_child(match_stick_instance)
+	print_debug('match: ', match_stick_instance.position)
+
+
+func place_match_sticks(amount: int) -> void:
+	var steps_y: float = 0
+	var steps_x: float = 0
+	
 	for i in range(amount):
-		var match_stick_instance = MATCH_STICK_SCENE.instantiate()
-		match_stick_instance.row_idx = i
-		match_stick_instance.freeze = true
+		place_match(i, steps_x, steps_y)
 		
-		if is_vertical:
-			match_stick_instance.position = Vector3(0, step * direction, 0)
-		add_child(match_stick_instance)
+		if GameSettings.matches_arr[i] > 1: # got to place more matches, this time horizontally
+			print(GameSettings.matches_arr[i])
+			var halfs = calculate_halfs(GameSettings.matches_arr[i])
+			halfs[1] -= 1 # we subtract 1 becaue we already place 1 match
+			
+			for j in range(halfs[0]):
+				steps_x -= PLACEMENT_STEPS
+				place_match(i, steps_x, steps_y)
+			steps_x = 0
+			
+			for k in range(halfs[1]):
+				steps_x += PLACEMENT_STEPS
+				place_match(i, steps_x, steps_y)
+			steps_x = 0
 		
-		step += PLACEMENT_STEPS
+		steps_y -= PLACEMENT_STEPS
+		print("steps_y", steps_y)

@@ -4,9 +4,6 @@ extends RigidBody3D
 @export var match_stick_black: Node3D
 @export var match_stick_red: Node3D
 
-# click select match
-# click again deselect match
-
 func select_match() -> void:
 	match_stick_red.visible = true
 	match_stick_black.visible = false

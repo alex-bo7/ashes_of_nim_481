@@ -9,6 +9,8 @@ var depth_lim: int = GameSettings.depth_lim
 
 var current_selected_row: int = -1
 var selected_matches: Array = []
+var all_match_objects: Array = []
+var move_state: Array = []
 
 var current_state: GameState = GameState.new(turn.PLAYER, 0, matches_arr, generate_moves(matches_arr))
 #endregion
@@ -65,27 +67,31 @@ func display(state:GameState) -> void:
 	print_debug("Turn: ", state.to_move, "\nUtility: ", state.utility, 
 	"\nBoard: ", state.board, "\nMoves: ", state.moves)
 
+#endregion
 
+#region StateManagement
 func player_move() -> void:
 	var move = [current_selected_row, selected_matches.size()]
-	print("Player move: ", move)
+	move_state = move
 	
 	current_state = result(current_state, move)
 	manage_game_state()
 
 
 func cpu_move() -> void:
-	var move = randi_range(0, current_state.moves.size())
-	move = current_state.moves[move]
-	print("CPU move: ", move)
+	# TODO replace with algorithm form 481
+	var move_index = randi_range(0, current_state.moves.size() - 1)
+	var move = current_state.moves[move_index]
+	move_state = move
 	
 	current_state = result(current_state, move)
 	manage_game_state()
 
 
 func manage_game_state() -> void:
+	reset_selections()
+	print_debug('GameState after move: ', move_state)
 	display(current_state)
-	# TODO: reset row, matches and delete matches
 	
 	# check winner
 	if terminal_test(current_state):
@@ -100,4 +106,27 @@ func manage_game_state() -> void:
 		await get_tree().create_timer(0.5).timeout
 		cpu_move()
 	# else player_move() called when player presses confirm btn
+
+
+func reset_selections() -> void:
+	current_selected_row = -1
+	
+	if current_state.to_move == turn.CPU:
+		for match_stick in selected_matches:
+			match_stick.queue_free()
+			all_match_objects.erase(match_stick)
+	else:
+		# cpu doesn't select any in game items so
+		# we need to destoy objects from its generated move
+		var to_destroy: Array = []
+		for match_stick in all_match_objects:
+			if match_stick.row_idx == move_state[0] and move_state[1] != 0:
+				to_destroy.append(match_stick)
+				move_state[1] -= 1
+		
+		for match_stick in to_destroy:
+			match_stick.queue_free()
+			all_match_objects.erase(match_stick)
+	selected_matches.clear()
+
 #endregion

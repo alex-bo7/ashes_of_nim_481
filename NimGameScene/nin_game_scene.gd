@@ -25,6 +25,7 @@ func place_match(i:int, x:float, y:float) -> void:
 	add_child(match_stick_instance)
 	#print_debug('match: ', match_stick_instance.position)
 	#print_debug('row: ', match_stick_instance.row_idx)
+	GameManager.all_match_objects.append(match_stick_instance)
 
 
 func place_match_sticks(amount: int) -> void:

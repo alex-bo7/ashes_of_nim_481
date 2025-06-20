@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxcu2xrrv7vb"]
+[gd_scene load_steps=14 format=3 uid="uid://bxcu2xrrv7vb"]
 
 [ext_resource type="Script" uid="uid://cuv6x20idi26e" path="res://MatchStick/match_stick.gd" id="1_7jd8k"]
-[ext_resource type="PackedScene" uid="uid://ki2bxyp5f5ly" path="res://MatchStick/match_stick.glb" id="2_fysdv"]
+[ext_resource type="Shader" uid="uid://doo5pmxnsoj0n" path="res://MatchStick/flame_shader.gdshader" id="3_fabjw"]
+[ext_resource type="PackedScene" uid="uid://bfkt7gkgbwbj6" path="res://MatchStick/match_stick_red.glb" id="4_kiqbe"]
+[ext_resource type="PackedScene" uid="uid://bhj8q8y7ktsf" path="res://MatchStick/match_stick_bw.glb" id="4_tubry"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fysdv"]
 
@@ -9,14 +11,52 @@
 height = 0.178223
 radius = 0.0180664
 
-[node name="RigidBody3D" type="RigidBody3D"]
+[sub_resource type="Gradient" id="Gradient_fabjw"]
+offsets = PackedFloat32Array(0, 0.557377, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.733822, 0.194141, 0, 1, 0.878063, 0.438285, 0.341567, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tubry"]
+gradient = SubResource("Gradient_fabjw")
+
+[sub_resource type="Gradient" id="Gradient_tubry"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.778689)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kiqbe"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kiqbe"]
+in_3d_space = true
+color_ramp = SubResource("Gradient_tubry")
+noise = SubResource("FastNoiseLite_kiqbe")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tubry"]
+render_priority = 0
+shader = ExtResource("3_fabjw")
+shader_parameter/flame_texture = SubResource("NoiseTexture2D_kiqbe")
+shader_parameter/color_gradient = SubResource("GradientTexture1D_tubry")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fabjw"]
+
+[node name="RigidBody3D" type="RigidBody3D" node_paths=PackedStringArray("match_stick_black", "match_stick_red")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 physics_material_override = SubResource("PhysicsMaterial_fysdv")
 script = ExtResource("1_7jd8k")
+match_stick_black = NodePath("match_stick_bw")
+match_stick_red = NodePath("match_stick_red")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -5.22915e-10, -0.0119629)
 shape = SubResource("CylinderShape3D_fabjw")
 
-[node name="match_stick2" parent="." instance=ExtResource("2_fysdv")]
+[node name="match_stick_bw" parent="." instance=ExtResource("4_tubry")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="match_stick_red" parent="." instance=ExtResource("4_kiqbe")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+visible = false
+
+[node name="flame" type="MeshInstance3D" parent="match_stick_red"]
+transform = Transform3D(0.00666667, 0, 0, 0, 0.00666667, -9.14101e-10, 0, 5.82819e-10, 0.0104561, 0, -1.78463e-09, -0.0408276)
+material_override = SubResource("ShaderMaterial_tubry")
+mesh = SubResource("PlaneMesh_fabjw")
+skeleton = NodePath("../..")

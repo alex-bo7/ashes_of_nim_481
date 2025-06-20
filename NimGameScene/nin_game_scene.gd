@@ -23,6 +23,7 @@ func place_match(i:int, x:float, y:float) -> void:
 	match_stick_instance.position = Vector3(x, y, 0)
 	add_child(match_stick_instance)
 	print_debug('match: ', match_stick_instance.position)
+	print(match_stick_instance.row_idx)
 
 
 func place_match_sticks(amount: int) -> void:
@@ -47,5 +48,4 @@ func place_match_sticks(amount: int) -> void:
 				place_match(i, steps_x, steps_y)
 			steps_x = 0
 		
-		steps_y -= PLACEMENT_STEPS
-		print("steps_y", steps_y)
+		steps_y = steps_y - PLACEMENT_STEPS - 0.05

@@ -5,6 +5,7 @@ const PLACEMENT_STEPS: float = 0.2
 
 func _ready() -> void:
 	place_match_sticks(GameSettings.matches_arr.size())
+	GameManager.initialize_values()
 	GameManager.display(GameManager.current_state)
 
 

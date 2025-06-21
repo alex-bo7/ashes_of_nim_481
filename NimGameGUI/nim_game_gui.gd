@@ -15,7 +15,7 @@ func fill_labels() -> void:
 	else:
 		turn_label.text = "AI Turn: " # + difficulty
 	
-	row_label.text = "Selected Row: " + str(GameManager.current_selected_row)
+	row_label.text = "Selected Row: " + str(GameManager.selected_row)
 	matches_label.text = "Selected Matches: " + str(GameManager.selected_matches.size())
 
 

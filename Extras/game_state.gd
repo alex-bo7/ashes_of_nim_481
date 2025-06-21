@@ -1,4 +1,4 @@
-extends Node
+extends RefCounted
 class_name GameState
 
 var to_move: GameManager.turn

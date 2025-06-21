@@ -3,23 +3,25 @@ extends Node
 #region variables
 enum turn {PLAYER, CPU}
 
-var matches_arr: Array = GameSettings.matches_arr
-var depth_lim: int = GameSettings.depth_lim
+var matches_arr: Array = []
+var depth_lim: int = -1
 # for algorithm call is_algo used for CPU turn
 
-var current_selected_row: int = -1
+# current states needs to be initialized here for gui to work
+var current_state: GameState = GameState.new(turn.PLAYER, 0, [], [])
+
+
+var selected_row: int = -1
 var selected_matches: Array = []
 var all_match_objects: Array = []
 var move_state: Array = []
 
-var current_state: GameState = GameState.new(turn.PLAYER, 0, matches_arr, generate_moves(matches_arr))
 #endregion
 
 #region GameOfNimFunc
 func generate_moves(board: Array) -> Array:
 	var moves = []
 	for i in range(board.size()):
-		
 		if board[i] == 0:
 			continue
 		else:
@@ -70,8 +72,14 @@ func display(state:GameState) -> void:
 #endregion
 
 #region StateManagement
+func initialize_values() -> void:
+	var matches_arr: Array = GameSettings.matches_arr
+	var depth_lim: int = GameSettings.depth_lim
+	current_state = GameState.new(turn.PLAYER, 0, matches_arr, generate_moves(matches_arr))
+
+
 func player_move() -> void:
-	var move = [current_selected_row, selected_matches.size()]
+	var move = [selected_row, selected_matches.size()]
 	move_state = move
 	
 	current_state = result(current_state, move)
@@ -109,7 +117,7 @@ func manage_game_state() -> void:
 
 
 func reset_selections() -> void:
-	current_selected_row = -1
+	selected_row = -1
 	
 	if current_state.to_move == turn.CPU:
 		for match_stick in selected_matches:

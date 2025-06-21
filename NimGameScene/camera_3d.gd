@@ -24,4 +24,4 @@ func handle_click(object: CollisionObject3D) -> void:
 	# Add your click handling logic here
 	if object.has_method("on_click"):
 		object.on_click()
-		gui.fill_labels()
+		gui.update_gui()

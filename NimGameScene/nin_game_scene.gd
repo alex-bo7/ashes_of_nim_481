@@ -4,8 +4,9 @@ const MATCH_STICK_SCENE = preload("res://MatchStick/match_stick.tscn")
 const PLACEMENT_STEPS: float = 0.2
 
 func _ready() -> void:
-	place_match_sticks(GameSettings.matches_arr.size())
 	GameManager.initialize_values()
+	
+	place_match_sticks(GameManager.matches_arr.size())
 	GameManager.display(GameManager.current_state)
 
 

@@ -10,7 +10,7 @@ border_width_top = 8
 border_width_right = 8
 border_width_bottom = 8
 
-[node name="Control" type="Control" node_paths=PackedStringArray("turn_label", "row_label", "matches_label", "confirm_btn")]
+[node name="gui" type="Control" node_paths=PackedStringArray("turn_label", "row_label", "matches_label", "confirm_btn", "panel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +22,7 @@ turn_label = NodePath("Panel/turn_label")
 row_label = NodePath("Panel/actions/row_label")
 matches_label = NodePath("Panel/actions/matches_label")
 confirm_btn = NodePath("Panel/actions/confirm_btn")
+panel = NodePath("Panel")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

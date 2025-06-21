@@ -73,8 +73,8 @@ func display(state:GameState) -> void:
 
 #region StateManagement
 func initialize_values() -> void:
-	var matches_arr: Array = GameSettings.matches_arr
-	var depth_lim: int = GameSettings.depth_lim
+	matches_arr = GameSettings.matches_arr
+	depth_lim = GameSettings.depth_lim
 	current_state = GameState.new(turn.PLAYER, 0, matches_arr, generate_moves(matches_arr))
 
 
@@ -87,6 +87,8 @@ func player_move() -> void:
 
 
 func cpu_move() -> void:
+	await get_tree().create_timer(0.5).timeout
+
 	# TODO replace with algorithm form 481
 	var move_index = randi_range(0, current_state.moves.size() - 1)
 	var move = current_state.moves[move_index]
@@ -111,7 +113,6 @@ func manage_game_state() -> void:
 	
 	# run next move
 	if current_state.to_move == turn.CPU:
-		await get_tree().create_timer(0.5).timeout
 		cpu_move()
 	# else player_move() called when player presses confirm btn
 

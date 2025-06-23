@@ -90,6 +90,8 @@ func cpu_move() -> void:
 	await get_tree().create_timer(0.5).timeout
 
 	# TODO replace with algorithm form 481
+	if current_state.moves.is_empty():
+		return
 	var move_index = randi_range(0, current_state.moves.size() - 1)
 	var move = current_state.moves[move_index]
 	move_state = move
@@ -105,11 +107,8 @@ func manage_game_state() -> void:
 	
 	# check winner
 	if terminal_test(current_state):
-		if current_state.to_move == turn.PLAYER:
-			print("CPU Won")
-		else:
-			print("PLAYER Won")
-		return # game over
+		get_tree().change_scene_to_file("res://EndGame/end_game.tscn")
+		return
 	
 	# run next move
 	if current_state.to_move == turn.CPU:

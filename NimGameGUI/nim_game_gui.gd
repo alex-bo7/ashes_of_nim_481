@@ -33,5 +33,6 @@ func _on_confirm_btn_pressed() -> void:
 	update_gui()
 	
 	# wait for ai turn, ai timer is 0.5
-	await get_tree().create_timer(0.8).timeout
-	update_gui()
+	if not GameManager.terminal_test(GameManager.current_state):
+		await get_tree().create_timer(0.8).timeout
+		update_gui()

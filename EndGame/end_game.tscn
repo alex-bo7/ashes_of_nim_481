@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://b15osteqpw0l5"]
+
+[ext_resource type="Script" uid="uid://ve0kuj1wfmcc" path="res://EndGame/end_game.gd" id="1_o1t5d"]
+[ext_resource type="FontFile" uid="uid://dsg2m1876ur6s" path="res://Extras/PlayfairDisplay-VariableFont_wght.ttf" id="2_aplrd"]
+
+[sub_resource type="Theme" id="Theme_q7sgj"]
+
+[node name="end_game" type="Control" node_paths=PackedStringArray("label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_q7sgj")
+script = ExtResource("1_o1t5d")
+label = NodePath("winner_label")
+
+[node name="winner_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -18.0
+offset_right = 92.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_aplrd")
+theme_override_font_sizes/font_size = 26
+text = "not working..."

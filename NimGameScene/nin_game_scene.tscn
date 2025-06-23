@@ -1,14 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://dl7fuaoqrwd7t"]
+[gd_scene load_steps=5 format=3 uid="uid://dl7fuaoqrwd7t"]
 
 [ext_resource type="Script" uid="uid://ihacaoa5gu65" path="res://NimGameScene/nin_game_scene.gd" id="1_o5sb6"]
 [ext_resource type="Script" uid="uid://di0ulueucxbd5" path="res://NimGameScene/camera_3d.gd" id="2_463ch"]
 [ext_resource type="PackedScene" uid="uid://cd6cgyw86duw7" path="res://NimGameGUI/nim_game_gui.tscn" id="3_uttaa"]
 
+[sub_resource type="Environment" id="Environment_uttaa"]
+background_mode = 1
+background_color = Color(0.0764765, 0.221232, 0.348858, 1)
+
 [node name="nin_game_scene" type="Node3D"]
 script = ExtResource("1_o5sb6")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_uttaa")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866024, -0.433016, 0.250001, 0.444428, -0.437538, 0.781694, -0.229101, 0.788072, 0.571362, 0, 0, 0)
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0.476257, -0.866637, 0.148727, 0.15226, 0.247865, 0.956756, 0, 0, 0)
+light_color = Color(1, 0.837945, 0.719433, 1)
+light_energy = 0.5
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("gui")]

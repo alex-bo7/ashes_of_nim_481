@@ -13,7 +13,7 @@ func _ready() -> void:
 
 
 func update_gui() -> void:
-	stylebox.set_border_width_all(4)
+	stylebox.set_border_width_all(6)
 	
 	if GameManager.current_state.to_move == GameManager.turn.PLAYER:
 		turn_label.text = "Player Turn"

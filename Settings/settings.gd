@@ -13,9 +13,9 @@ const MEDIUM: String = 'medium'
 const HARD: String = 'hard'
 
 const DIFFICULTY_VALUES: Dictionary = {
-	EASY: {"min_rows": 3, "max_rows": 5, "min_val": 1, "max_val": 10},
-	MEDIUM: {"min_rows": 4, "max_rows": 7, "min_val": 3, "max_val": 20},
-	HARD: {"min_rows": 6, "max_rows": 10, "min_val": 5, "max_val": 40},
+	EASY: {"min_rows": 2, "max_rows": 3, "min_val": 1, "max_val": 4},
+	MEDIUM: {"min_rows": 3, "max_rows": 4, "min_val": 2, "max_val": 6},
+	HARD: {"min_rows": 3, "max_rows": 5, "min_val": 3, "max_val": 9},
 }
 
 # ---------- Godot ----------
@@ -25,8 +25,8 @@ func _ready() -> void:
 	rows.text = str(GameSettings.matches_arr)
 	depth_limit.text = str(GameSettings.depth_lim)
 	
-	minimax_btn.button_pressed = GameSettings.is_algo_minimax()
-	random_btn.button_pressed = !GameSettings.is_algo_minimax()
+	minimax_btn.button_pressed = GameSettings.is_algo_alphabeta()
+	random_btn.button_pressed = !GameSettings.is_algo_alphabeta()
 
 #region Helper
 func generate_array(arr_length:int, min_val:int, max_val:int) -> Array:
@@ -113,7 +113,7 @@ func _on_hard_btn_pressed() -> void:
 
 
 func _on_minimax_select_pressed() -> void:
-	GameSettings.set_algo_as_minimax()
+	GameSettings.set_algo_as_alphabeta()
 
 
 func _on_random_select_pressed() -> void:

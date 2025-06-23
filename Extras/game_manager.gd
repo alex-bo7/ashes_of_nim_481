@@ -36,15 +36,18 @@ func player_move() -> void:
 
 func cpu_move() -> void:
 	await get_tree().create_timer(0.5).timeout
-
-	# TODO replace with algorithm form 481
 	if current_state.moves.is_empty():
 		return
-	var move_index = randi_range(0, current_state.moves.size() - 1)
-	var move = current_state.moves[move_index]
-	move_state = move
 	
-	current_state = nim.result(current_state, move)
+	if GameSettings.is_algo_alphabeta():
+		# This uses default cutoff and eval inline (matches what was in the Python version)
+		var cutoff_test = func(state, depth): return depth > depth_lim or nim.terminal_test(state)
+		var eval_fn = func(state): return nim.utility(state, nim.to_move(current_state))
+		move_state = Algorithms.alpha_beta_cutoff_search(current_state, nim, depth_lim, cutoff_test, eval_fn)
+	else:
+		move_state = Algorithms.random_move(current_state.moves)
+	
+	current_state = nim.result(current_state, move_state)
 	manage_game_state()
 
 

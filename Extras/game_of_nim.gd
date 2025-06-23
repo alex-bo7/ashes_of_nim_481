@@ -21,6 +21,10 @@ func generate_moves(board: Array) -> Array:
 	return moves # returns array of arrays i.e [ [0, 1], [1, 1] ]
 
 
+func to_move(state: GameState):
+	return state.to_move
+
+
 func actions(state: GameState) -> Array:
 	"""Legal moves are at least one object, all from the same row."""
 	return state.moves

@@ -16,7 +16,6 @@ func _input(event: InputEvent) -> void:
 		
 		if result:
 			var clicked_object: CollisionObject3D = result["collider"]
-			#print_debug("Clicked on", clicked_object.name)
 			handle_click(clicked_object)
 
 

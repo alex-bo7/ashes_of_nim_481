@@ -7,7 +7,7 @@ func _ready() -> void:
 	GameManager.initialize_values()
 	
 	place_match_sticks(GameManager.matches_arr.size())
-	GameManager.display(GameManager.current_state)
+	GameManager.nim.display(GameManager.current_state)
 
 
 func calculate_halfs(length: int) -> Array:

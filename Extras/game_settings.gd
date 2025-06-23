@@ -1,4 +1,4 @@
-extends Node
+extends RefCounted
 
 var matches_arr: Array = [1, 3, 5]
 

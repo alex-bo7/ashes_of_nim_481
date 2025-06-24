@@ -63,12 +63,10 @@ func minmax_decision(state:GameState, game:GameOfNim):
 	var best_value = -INF
 
 	for a in game.actions(state):
-		# Call _min_value as a method of this script
 		var action_value = mm_min_value(game.result(state, a), player, game)
 		if action_value > best_value:
 			best_value = action_value
 			best_action = a
-			
 	return best_action
 
 

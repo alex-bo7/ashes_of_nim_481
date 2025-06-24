@@ -58,8 +58,13 @@ func manage_game_state() -> void:
 	print_debug('GameState after move: ', move_state)
 	nim.display(current_state)
 	
-	# check winner
 	if nim.terminal_test(current_state):
+		# check winner from players perspective
+		var final_player_utility: int = nim.utility(current_state, turn.PLAYER) 
+		print("Final utility for Player:", final_player_utility)
+		
+		current_state.utility = final_player_utility 
+		
 		get_tree().change_scene_to_file("res://EndGame/end_game.tscn")
 		return
 	

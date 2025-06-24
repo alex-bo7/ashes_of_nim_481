@@ -12,8 +12,8 @@ height = 0.178223
 radius = 0.0180664
 
 [sub_resource type="Gradient" id="Gradient_fabjw"]
-offsets = PackedFloat32Array(0, 0.557377, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.733822, 0.194141, 0, 1, 0.878063, 0.438285, 0.341567, 1)
+offsets = PackedFloat32Array(0, 0.647541, 1)
+colors = PackedColorArray(0.815686, 0, 0, 1, 0.909804, 0.364706, 0.0156863, 1, 1, 0.729412, 0.0313726, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_tubry"]
 gradient = SubResource("Gradient_fabjw")
@@ -55,7 +55,14 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 visible = false
 
-[node name="flame" type="MeshInstance3D" parent="match_stick_red"]
+[node name="blue_flame" type="MeshInstance3D" parent="match_stick_red"]
+transform = Transform3D(0.00666667, 0, 0, 0, 0.00666667, -9.14101e-10, 0, 5.82819e-10, 0.0104561, 0, -1.78463e-09, -0.0408276)
+visible = false
+material_override = SubResource("ShaderMaterial_tubry")
+mesh = SubResource("PlaneMesh_fabjw")
+skeleton = NodePath("../..")
+
+[node name="red_flame" type="MeshInstance3D" parent="match_stick_red"]
 transform = Transform3D(0.00666667, 0, 0, 0, 0.00666667, -9.14101e-10, 0, 5.82819e-10, 0.0104561, 0, -1.78463e-09, -0.0408276)
 material_override = SubResource("ShaderMaterial_tubry")
 mesh = SubResource("PlaneMesh_fabjw")

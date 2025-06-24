@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b15osteqpw0l5"]
+[gd_scene load_steps=5 format=3 uid="uid://b15osteqpw0l5"]
 
 [ext_resource type="Script" uid="uid://ve0kuj1wfmcc" path="res://EndGame/end_game.gd" id="1_o1t5d"]
 [ext_resource type="FontFile" uid="uid://dsg2m1876ur6s" path="res://Extras/PlayfairDisplay-VariableFont_wght.ttf" id="2_aplrd"]
+[ext_resource type="PackedScene" uid="uid://3yynkpf1h7iv" path="res://Extras/world_environment.tscn" id="3_q7sgj"]
 
 [sub_resource type="Theme" id="Theme_q7sgj"]
 
@@ -32,3 +33,7 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_aplrd")
 theme_override_font_sizes/font_size = 26
 text = "not working..."
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("3_q7sgj")]
+
+[node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]

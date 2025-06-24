@@ -6,23 +6,33 @@ extends Control
 @export var confirm_btn: Button
 @export var panel: Panel
 
+const GREEN: String = "#06d6a0" #06d6a0
+const RED: String = "#ef476f"
+
 var stylebox: StyleBoxFlat = get_theme_stylebox("panel")
 
 func _ready() -> void:
 	update_gui()
 
 
-func update_gui() -> void:
+func change_label(new_text:String, new_color:String) -> void:
+	turn_label.text = new_text
+	turn_label.add_theme_color_override("font_color", new_color)
+
+
+func change_panel(new_color:String) -> void:
 	stylebox.set_border_width_all(6)
-	
+	stylebox.border_color = Color(new_color)
+	panel.add_theme_stylebox_override("panel", stylebox)
+
+
+func update_gui() -> void:
 	if GameManager.current_state.to_move == GameManager.turn.PLAYER:
-		turn_label.text = "Player Turn"
-		stylebox.border_color = Color.GREEN
-		panel.add_theme_stylebox_override("panel", stylebox)
+		change_label("Player Turn", GREEN)
+		change_panel(GREEN)
 	else:
-		turn_label.text = "AI Turn"
-		stylebox.border_color = Color.RED
-		panel.add_theme_stylebox_override("panel", stylebox) 
+		change_label("AI Turn", RED)
+		change_panel(RED)
 	
 	row_label.text = "Selected Row: " + str(GameManager.selected_row)
 	matches_label.text = "Selected Matches: " + str(GameManager.selected_matches.size())

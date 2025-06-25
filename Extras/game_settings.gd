@@ -5,7 +5,7 @@ var matches_arr: Array = [1, 3, 5]
 enum Algorithm { RANDOM, MINIMAX, ALPHABETA }
 var current_algorithm: Algorithm = Algorithm.RANDOM
 
-var depth_lim: int = 3
+var depth_lim: int = 1
 
 func is_algo_alphabeta() -> bool:
 	return current_algorithm == Algorithm.ALPHABETA

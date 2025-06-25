@@ -48,7 +48,7 @@ func utility(state:GameState, player) -> int:
 	"""Return the value to player; 1 for win, -1 for loss, 0 otherwise."""
 	if terminal_test(state):
 		var winner = GameManager.turn.CPU if state.to_move == GameManager.turn.PLAYER else GameManager.turn.PLAYER
-		return -1 if player == winner else 1
+		return 1 if player == winner else -1
 	return 0
 
 

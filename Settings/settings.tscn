@@ -135,6 +135,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "!!!"
 
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/alphabeta"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_cdu2u")
+theme_override_font_sizes/font_size = 20
+text = "Note: Higher depth limits increase AI turn time"
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/back_btn" to="." method="_on_back_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/easy_btn" to="." method="_on_easy_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/medium_btn" to="." method="_on_medium_btn_pressed"]

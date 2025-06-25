@@ -54,33 +54,9 @@ func generate_rows(min_size:int, max_size:int, min_itemsue:int, max_itemsue:int)
 
 
 func calculate_depth_limit(arr: Array, difficulty: String) -> int:
-	# count total matches in all of the rows
-	var total: int = 0
-	for row in arr:
-		total += row
-	
-	'''
-		Depth limit formula by ChatGPT
-	
-		Base depth using log₂(n)
-		How many times you can divide a number in half until you get to 1
-	'''
-	var base_depth: float = log(total + 1) / log(2)
-
-	# Apply difficulty-based buffer
-	var buffer: float = 0.0
 	if difficulty == EASY:
-		buffer = 1.0
-	elif difficulty == MEDIUM:
-		buffer = 3.0
-	else:
-		buffer = 5.0
-	var depth: int = int(base_depth + buffer)
-
-	# Clamp to prevent overload / make sure number is not too small or too big
-	var depth_limit_result: int = clamp(depth, MIN_DEPTH, MAX_DEPTH)
-	print_debug('Depth limit: ', depth_limit_result)
-	return depth_limit_result
+		return randi_range(0, 1)
+	return 2
 
 
 func handle_difficulty(difficulty: String) -> void:
@@ -111,6 +87,7 @@ func _on_rows_input_text_changed(new_text: String) -> void:
 
 func _on_limit_input_text_changed(new_text: String) -> void:
 	GameSettings.depth_lim = new_text.to_int()
+	_on_alphabeta_select_pressed()
 
 
 #region Godot:Button Signals

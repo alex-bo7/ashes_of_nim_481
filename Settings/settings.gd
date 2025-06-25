@@ -1,9 +1,10 @@
 extends Control
 
 @export var rows: LineEdit
-@export var depth_limit: LineEdit
-@export var minimax_btn: Button
 @export var random_btn: Button
+@export var minimax_btn: Button
+@export var alphabeta_btn: Button
+@export var depth_limit: LineEdit
 
 const MIN_DEPTH = 3
 const MAX_DEPTH = 20
@@ -13,9 +14,9 @@ const MEDIUM: String = 'medium'
 const HARD: String = 'hard'
 
 const DIFFICULTY_VALUES: Dictionary = {
-	EASY: {"min_rows": 2, "max_rows": 3, "min_val": 1, "max_val": 4},
-	MEDIUM: {"min_rows": 3, "max_rows": 4, "min_val": 2, "max_val": 6},
-	HARD: {"min_rows": 3, "max_rows": 5, "min_val": 3, "max_val": 9},
+	EASY: {"min_rows": 2, "max_rows": 3, "min_items": 1, "max_items": 5},
+	MEDIUM: {"min_rows": 3, "max_rows": 4, "min_items": 1, "max_items": 8},
+	HARD: {"min_rows": 4, "max_rows": 6, "min_items": 1, "max_items": 15},
 }
 
 # ---------- Godot ----------
@@ -25,23 +26,28 @@ func _ready() -> void:
 	rows.text = str(GameSettings.matches_arr)
 	depth_limit.text = str(GameSettings.depth_lim)
 	
-	minimax_btn.button_pressed = GameSettings.is_algo_alphabeta()
-	random_btn.button_pressed = !GameSettings.is_algo_alphabeta()
+	set_selected_btn()
 
 #region Helper
-func generate_array(arr_length:int, min_val:int, max_val:int) -> Array:
+func set_selected_btn() -> void:
+	random_btn.button_pressed = GameSettings.get_algo() == GameSettings.Algorithm.RANDOM
+	minimax_btn.button_pressed = GameSettings.get_algo() == GameSettings.Algorithm.MINIMAX
+	alphabeta_btn.button_pressed = GameSettings.get_algo() == GameSettings.Algorithm.ALPHABETA
+
+
+func generate_array(arr_length:int, min_items:int, max_items:int) -> Array:
 	var arr_result: Array = []
 	for i in range(arr_length):
-		var random_int: int = randi_range(min_val, max_val)
+		var random_int: int = randi_range(min_items, max_items)
 		arr_result.append(random_int)
 	return arr_result
 
 
-func generate_rows(min_size:int, max_size:int, min_value:int, max_value:int) -> Array:
+func generate_rows(min_size:int, max_size:int, min_itemsue:int, max_itemsue:int) -> Array:
 	# generate random array size
 	var arr_size: int = randi_range(min_size, max_size)
 	# fill array with random numbers
-	var arr: Array = generate_array(arr_size, min_value, max_value)
+	var arr: Array = generate_array(arr_size, min_itemsue, max_itemsue)
 	# debug
 	print_debug('Array: ', arr)
 	return arr
@@ -83,8 +89,8 @@ func handle_difficulty(difficulty: String) -> void:
 	var arr: Array = generate_rows(
 		values['min_rows'],
 		values['max_rows'],
-		values['min_val'],
-		values['max_val']
+		values['min_items'],
+		values['max_items']
 	)
 	GameSettings.matches_arr = arr
 	rows.text = str(arr)
@@ -93,6 +99,18 @@ func handle_difficulty(difficulty: String) -> void:
 	GameSettings.depth_lim = limit
 	depth_limit.text = str(limit)
 #endregion
+
+
+func _on_rows_input_text_changed(new_text: String) -> void:
+	GameSettings.matches_arr.clear()
+	for letter in new_text.split(",", false):
+		var number: int = letter.to_int()
+		if number > 0:
+			GameSettings.matches_arr.append(number)
+
+
+func _on_limit_input_text_changed(new_text: String) -> void:
+	GameSettings.depth_lim = new_text.to_int()
 
 
 #region Godot:Button Signals
@@ -112,10 +130,14 @@ func _on_hard_btn_pressed() -> void:
 	handle_difficulty(HARD)
 
 
-func _on_minimax_select_pressed() -> void:
-	GameSettings.set_algo_as_alphabeta()
-
-
 func _on_random_select_pressed() -> void:
 	GameSettings.set_algo_as_random()
+
+
+func _on_minimax_select_pressed() -> void:
+	GameSettings.set_algo_as_minimax()
+
+
+func _on_alphabeta_select_pressed() -> void:
+	GameSettings.set_algo_as_alphabeta()
 #endregion

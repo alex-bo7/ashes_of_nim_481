@@ -5,7 +5,7 @@
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_cdu2u"]
 
-[node name="settings" type="Control" node_paths=PackedStringArray("rows", "depth_limit", "minimax_btn", "random_btn")]
+[node name="settings" type="Control" node_paths=PackedStringArray("rows", "random_btn", "minimax_btn", "alphabeta_btn", "depth_limit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,9 +14,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qeycx")
 rows = NodePath("MarginContainer/VBoxContainer/rows/rows_input")
-depth_limit = NodePath("MarginContainer/VBoxContainer/HBoxContainer/limit_input")
-minimax_btn = NodePath("MarginContainer/VBoxContainer/HBoxContainer/minimax_select")
 random_btn = NodePath("MarginContainer/VBoxContainer/random_select")
+minimax_btn = NodePath("MarginContainer/VBoxContainer/minimax/minimax_select")
+alphabeta_btn = NodePath("MarginContainer/VBoxContainer/alphabeta/alphabeta_select")
+depth_limit = NodePath("MarginContainer/VBoxContainer/alphabeta/limit_input")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -94,28 +95,6 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
 text = "singleton not working"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="minimax_select" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_cdu2u")
-theme_override_font_sizes/font_size = 24
-button_group = SubResource("ButtonGroup_cdu2u")
-text = "Minimax"
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_cdu2u")
-theme_override_font_sizes/font_size = 22
-text = "with depth limit:"
-
-[node name="limit_input" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "!!!"
-
 [node name="random_select" type="CheckBox" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_cdu2u")
@@ -123,9 +102,45 @@ theme_override_font_sizes/font_size = 24
 button_group = SubResource("ButtonGroup_cdu2u")
 text = "Random"
 
+[node name="minimax" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="minimax_select" type="CheckBox" parent="MarginContainer/VBoxContainer/minimax"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_cdu2u")
+theme_override_font_sizes/font_size = 24
+button_group = SubResource("ButtonGroup_cdu2u")
+text = "Minimax"
+
+[node name="alphabeta" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="alphabeta_select" type="CheckBox" parent="MarginContainer/VBoxContainer/alphabeta"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_cdu2u")
+theme_override_font_sizes/font_size = 24
+button_group = SubResource("ButtonGroup_cdu2u")
+text = "Alpha-Beta"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/alphabeta"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_cdu2u")
+theme_override_font_sizes/font_size = 22
+text = "with depth limit:"
+
+[node name="limit_input" type="LineEdit" parent="MarginContainer/VBoxContainer/alphabeta"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "!!!"
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/back_btn" to="." method="_on_back_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/easy_btn" to="." method="_on_easy_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/medium_btn" to="." method="_on_medium_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/hard_btn" to="." method="_on_hard_btn_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/minimax_select" to="." method="_on_minimax_select_pressed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/rows/rows_input" to="." method="_on_rows_input_text_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/random_select" to="." method="_on_random_select_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/minimax/minimax_select" to="." method="_on_minimax_select_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/alphabeta/alphabeta_select" to="." method="_on_alphabeta_select_pressed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/alphabeta/limit_input" to="." method="_on_limit_input_text_changed"]

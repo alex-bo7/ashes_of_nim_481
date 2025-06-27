@@ -5,6 +5,12 @@
 
 ---
 
+## Overview
+
+Ashes of Nim is a 3D implementation of the classic Game of Nim using the Godot game engine. The main feature of this project is an AI opponent with varying difficulty levels (easy, medium, and hard), which can be set by the player.
+
+---
+
 ## Project Structure
 Some files are excluded; see the 'Excluded Files' section.
 

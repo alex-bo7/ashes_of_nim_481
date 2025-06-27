@@ -52,3 +52,9 @@ Some files and directories (e.g., `.import/`, `.godot/`, `icon.png`, autogenerat
 - AIMA Minimax/Alpha-Beta Python code (adapted): https://github.com/aimacode/aima-python
 
 ---
+
+## Data
+
+This project does not use external datasets. All matchstick configurations are generated at runtime by the game logic. No third-party data was collected or used.
+
+---

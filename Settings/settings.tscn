@@ -5,7 +5,7 @@
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_cdu2u"]
 
-[node name="settings" type="Control" node_paths=PackedStringArray("rows", "random_btn", "minimax_btn", "alphabeta_btn", "depth_limit")]
+[node name="settings" type="Control" node_paths=PackedStringArray("rows", "random_btn", "minimax_btn", "alphabeta_btn", "depth_limit", "record_info")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +18,7 @@ random_btn = NodePath("MarginContainer/VBoxContainer/random_select")
 minimax_btn = NodePath("MarginContainer/VBoxContainer/minimax/minimax_select")
 alphabeta_btn = NodePath("MarginContainer/VBoxContainer/alphabeta/alphabeta_select")
 depth_limit = NodePath("MarginContainer/VBoxContainer/alphabeta/limit_input")
+record_info = NodePath("MarginContainer/VBoxContainer/records_text")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -140,6 +141,13 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_cdu2u")
 theme_override_font_sizes/font_size = 20
 text = "Note: Higher depth limits increase AI turn time"
+
+[node name="records_text" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_cdu2u")
+theme_override_font_sizes/normal_font_size = 24
+text = "No records yet"
+fit_content = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/back_btn" to="." method="_on_back_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/difficulties/easy_btn" to="." method="_on_easy_btn_pressed"]

@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameSettings="*res://Extras/game_settings.gd"
 GameManager="*res://Extras/game_manager.gd"
 Algorithms="*res://Extras/algorithms.gd"
+Records="*res://Extras/Records.gd"
 
 [display]
 

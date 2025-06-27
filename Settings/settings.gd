@@ -5,6 +5,7 @@ extends Control
 @export var minimax_btn: Button
 @export var alphabeta_btn: Button
 @export var depth_limit: LineEdit
+@export var record_info: RichTextLabel
 
 const MIN_DEPTH = 3
 const MAX_DEPTH = 20
@@ -27,8 +28,18 @@ func _ready() -> void:
 	depth_limit.text = str(GameSettings.depth_lim)
 	
 	set_selected_btn()
+	fill_records()
 
 #region Helper
+func fill_records() -> void:
+	if Records.games_played == 0:
+		record_info.text = "No games played yet"
+	else:
+		record_info.text = "Games played: " + str(Records.games_played) + \
+		"\nPlayer wins: " + str(Records.player_wins) + \
+		"\n CPU wins: " + str(Records.games_played - Records.player_wins)
+
+
 func set_selected_btn() -> void:
 	random_btn.button_pressed = GameSettings.get_algo() == GameSettings.Algorithm.RANDOM
 	minimax_btn.button_pressed = GameSettings.get_algo() == GameSettings.Algorithm.MINIMAX

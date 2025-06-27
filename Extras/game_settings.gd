@@ -7,8 +7,13 @@ var current_algorithm: Algorithm = Algorithm.RANDOM
 
 var depth_lim: int = 1
 
-func is_algo_alphabeta() -> bool:
-	return current_algorithm == Algorithm.ALPHABETA
+func is_algo_random() -> bool:
+	return current_algorithm == Algorithm.RANDOM
+
+
+func is_algo_minimax() -> bool:
+	return current_algorithm == Algorithm.MINIMAX
+
 
 func get_algo() -> Algorithm:
 	return current_algorithm

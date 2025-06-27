@@ -39,15 +39,14 @@ func cpu_move() -> void:
 	if current_state.moves.is_empty():
 		return
 	
-	if GameSettings.is_algo_alphabeta():
-		# This uses default cutoff and eval inline (matches what was in the Python version)
-		#var cutoff_test = func(state, depth): return depth > depth_lim or nim.terminal_test(state)
-		#var eval_fn = func(state): return nim.utility(state, nim.to_move(current_state))
-		#move_state = Algorithms.alpha_beta_cutoff_search(current_state, nim, depth_lim, cutoff_test, eval_fn)
-		
+	if GameSettings.is_algo_random():
+		move_state = Algorithms.random_move(current_state.moves)
+	elif GameSettings.is_algo_minimax():
 		move_state = Algorithms.minmax_decision(current_state, nim)
 	else:
-		move_state = Algorithms.random_move(current_state.moves)
+		var cutoff_test = func(state, depth): return depth > depth_lim or nim.terminal_test(state)
+		var eval_fn = func(state): return nim.utility(state, nim.to_move(current_state))
+		move_state = Algorithms.alpha_beta_cutoff_search(current_state, nim, depth_lim, cutoff_test, eval_fn)
 	
 	current_state = nim.result(current_state, move_state)
 	manage_game_state()
